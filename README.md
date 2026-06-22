@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Grade Calculator
 
 A Python application that calculates final module marks using custom assessment categories and weightings.
@@ -17,3 +18,7 @@ A Python application that calculates final module marks using custom assessment 
 ## Author
 
 Charles Fortuin
+=======
+# grade-calculator
+A Python application that calculates final module marks using custom assessment categories and weightings.
+>>>>>>> 75342e291c3b6e68ff21a6fc236cabd6c63082f9
