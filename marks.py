@@ -45,6 +45,12 @@ def display(name,avgs,weights,final,result,modname):
     print(f"Final mark: {final:.2f}%\n")
     print(f"Result: {result}")
 
+def save_module_validation(letter):
+    while letter.lower() != "y" and letter.lower() != "n":
+        print("Error: Please enter y or n only")
+        letter = input("Save Module? (y/n): ")
+    return letter.lower()
+
 def save_module(module_name,final_mark,result):
     with open("saved_modules.txt","a") as file:
         file.write(f"Module Name: {module_name}\n")
@@ -82,8 +88,8 @@ def main():
 
     display(category_names,category_averages,category_weights,final_mark,result,module_name)
     
-    save = input("Save Module? (y/n): ")
-    if save.lower() == "y":
+    saved = input("Save Module? (y/n): ")
+    if save_module_validation(saved) == "y":
         save_module(module_name,final_mark,result)
     
 
