@@ -51,12 +51,19 @@ def save_module_validation(letter):
         letter = input("Save Module? (y/n): ")
     return letter.lower()
 
-def save_module(module_name,final_mark,result):
+def save_module(module_name,final_mark,result,category_name,weights,avgs):
     with open("saved_modules.txt","a") as file:
-        file.write(f"Module Name: {module_name}\n")
-        file.write(f"Final Mark: {final_mark:.2f}%\n")
-        file.write(f"Result: {result}\n")
+        size = len(category_name)
+        file.write("-----------------\n\n")
+        file.write(f"Module name: {module_name}\n\n")
+        file.write("-----------------\n\n")
+        for i in range(size):
+            file.write(f"{category_name[i]}\n")
+            file.write(f"Average is: {avgs[i]:.2f}%\n")
+            file.write(f"weight is: {weights[i] * 100:.2f}%\n\n")
         file.write("-----------------\n")
+        file.write(f"Final mark: {final_mark:.2f}%\n")
+        file.write(f"Result: {result}\n\n")
     
 
 def main():
@@ -90,7 +97,7 @@ def main():
     
     saved = input("Save Module? (y/n): ")
     if save_module_validation(saved) == "y":
-        save_module(module_name,final_mark,result)
+        save_module(module_name,final_mark,result,category_names,category_weights,category_averages)
     
 
 

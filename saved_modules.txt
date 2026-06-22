@@ -1,0 +1,36 @@
+-----------------
+
+Module name: CS114
+
+-----------------
+
+A1
+Average is: 100.00%
+weight is: 50.00%
+
+A2
+Average is: 100.00%
+weight is: 50.00%
+
+-----------------
+Final mark: 100.00%
+Result: PASS
+
+-----------------
+
+Module name: PTS114
+
+-----------------
+
+A1
+Average is: 50.00%
+weight is: 40.00%
+
+A2
+Average is: 74.00%
+weight is: 60.00%
+
+-----------------
+Final mark: 64.40%
+Result: PASS
+
