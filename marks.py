@@ -22,7 +22,11 @@ def calc_average(category):
 
 def get_weights(category):
     print(f"Entering {category} weighting")
-    weight = float(input("Enter weighting: ")) / 100
+    weight = float(input("Enter weighting: "))
+    while weight < 0 or weight > 100:
+        print("Error: Weight must be between 0 and 100")
+        weight = float(input("Enter weighting: "))
+    weight /= 100
     return weight
 
 def results(final):
