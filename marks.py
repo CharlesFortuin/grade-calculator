@@ -60,7 +60,7 @@ def main():
         final_mark += average * weight
         total_weight += weight
     
-    if total_weight != 1.0:
+    if abs(total_weight-1.0) > 0.001:
         print("Error: Weightings must add to 100%")
         return
 
