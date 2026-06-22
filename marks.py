@@ -11,6 +11,9 @@ def calc_average(category):
 
     for i in range(num_marks):
         mark = float(input("Enter mark(%): "))
+        while mark < 0 or mark > 100:
+            print("Error: Mark must be between 0 and 100")
+            mark = float(input("Enter mark(%): "))
         total += mark
 
     average = total/num_marks
