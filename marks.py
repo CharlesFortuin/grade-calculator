@@ -40,14 +40,21 @@ def display(name,avgs,weights,final,result,modname):
     for i in range(size):
         print(f"{name[i]}\n")
         print(f"Average is: {avgs[i]:.2f}%\n")
-        print(f"weight is: {weights[i] * 100}%\n\n")
+        print(f"weight is: {weights[i] * 100:.2f}%\n\n")
     print("-----------------\n")
     print(f"Final mark: {final:.2f}%\n")
     print(f"Result: {result}")
+
+def save_module(module_name,final_mark,result):
+    with open("saved_modules.txt","a") as file:
+        file.write(f"Module Name: {module_name}\n")
+        file.write(f"Final Mark: {final_mark:.2f}%\n")
+        file.write(f"Result: {result}\n")
+        file.write("-----------------\n")
     
 
 def main():
-    module_name = input("Enter module name")
+    module_name = input("Enter module name: ")
     category_names = []
     category_averages = []
     category_weights = []
@@ -74,6 +81,10 @@ def main():
     result = results(final_mark)
 
     display(category_names,category_averages,category_weights,final_mark,result,module_name)
+    
+    save = input("Save Module? (y/n): ")
+    if save.lower() == "y":
+        save_module(module_name,final_mark,result)
     
 
 
