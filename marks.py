@@ -47,7 +47,7 @@ def display(name,avgs,weights,final,result,modname):
     print(f"Final mark: {final:.2f}%\n")
     print(f"Result: {result}")
 
-def save_module_validation(letter):
+def saveordelete_module_validation(letter):
     while letter.lower() != "y" and letter.lower() != "n":
         print("Error: Please enter y or n only")
         letter = input("Save Module? (y/n): ")
@@ -112,7 +112,7 @@ def calculate_module():
     display(category_names,category_averages,category_weights,final_mark,result,module_name)
     
     saved = input("Save Module? (y/n): ")
-    if save_module_validation(saved) == "y":
+    if saveordelete_module_validation(saved) == "y":
         save_module(module_name,final_mark,result,category_names,category_weights,category_averages)
 
 def list_saved_modules():
@@ -127,11 +127,28 @@ def list_saved_modules():
             module_name = file.removesuffix(".txt")
             print(module_name)
 
+def delete_module():
+    module_name = input("Enter module name: ")
+    folder = "modulemarks"
+    filename = module_name + ".txt"
+    path = os.path.join(folder,filename)
+    if os.path.exists(path):
+        choice = input(f"Delete {module_name}? (y/n): ")
+        if saveordelete_module_validation(choice) == "y":
+            os.remove(path)
+            print("Module successfully deleted")
+        else:
+            print("Module deletion cancelled")
+    else:
+        print("Module not found")
+    
+
 def menu():
     print("1. Calculate Module Marks")
     print("2. View Module")
     print("3. List saved modules")
-    print("4. Exit\n")
+    print("4. Delete module")
+    print("5. Exit\n")
     
     choice = input("Choice: ")
     return choice
@@ -148,8 +165,11 @@ def main():
         
         elif choice == "3":
             list_saved_modules()
-
+        
         elif choice == "4":
+            delete_module()
+
+        elif choice == "5":
             print("\nGoodbye!")
             break
 
