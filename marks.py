@@ -64,9 +64,17 @@ def save_module(module_name,final_mark,result,category_name,weights,avgs):
         file.write("-----------------\n")
         file.write(f"Final mark: {final_mark:.2f}%\n")
         file.write(f"Result: {result}\n\n")
-    
 
-def main():
+def view_saved_modules():
+    try:
+        with open("saved_modules.txt","r") as file:
+            contents = file.read()
+        print(contents)
+
+    except FileNotFoundError:
+        print("No saved modules found!")
+
+def calculate_module():
     module_name = input("Enter module name: ")
     category_names = []
     category_averages = []
@@ -98,6 +106,32 @@ def main():
     saved = input("Save Module? (y/n): ")
     if save_module_validation(saved) == "y":
         save_module(module_name,final_mark,result,category_names,category_weights,category_averages)
+
+
+def menu():
+    print("1. Calculate Module Marks")
+    print("2. View Saved Module Marks")
+    print("3. Exit\n")
+    
+    choice = input("Choice: ")
+    return choice
+
+def main():
+    while True:
+        choice = menu()
+
+        if choice == "1":
+            calculate_module()
+        
+        elif choice == "2":
+            view_saved_modules()
+        
+        elif choice == "3":
+            print("\nGoodbye!")
+            break
+
+        else:
+            print("Invalid Choice")
     
 
 

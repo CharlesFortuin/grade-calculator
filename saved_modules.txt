@@ -34,3 +34,21 @@ weight is: 60.00%
 Final mark: 64.40%
 Result: PASS
 
+-----------------
+
+Module name: Math114
+
+-----------------
+
+A1
+Average is: 100.00%
+weight is: 40.00%
+
+A2
+Average is: 80.00%
+weight is: 60.00%
+
+-----------------
+Final mark: 88.00%
+Result: PASS
+
