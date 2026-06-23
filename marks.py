@@ -67,13 +67,14 @@ def save_module(module_name,final_mark,result,category_name,weights,avgs):
         file.write(f"Result: {result}\n\n")
 
 def view_saved_modules():
+    filename = input("Enter module name: ") + ".txt"
     try:
-        with open("saved_modules.txt","r") as file:
+        with open(filename,"r") as file:
             contents = file.read()
         print(contents)
 
     except FileNotFoundError:
-        print("No saved modules found!")
+        print("Module not found.")
 
 def calculate_module():
     module_name = input("Enter module name: ")
@@ -111,7 +112,7 @@ def calculate_module():
 
 def menu():
     print("1. Calculate Module Marks")
-    print("2. View Saved Module Marks")
+    print("2. View Module")
     print("3. Exit\n")
     
     choice = input("Choice: ")
