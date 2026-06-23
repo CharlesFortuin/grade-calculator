@@ -54,8 +54,10 @@ def save_module_validation(letter):
     return letter.lower()
 
 def save_module(module_name,final_mark,result,category_name,weights,avgs):
+    folder = "modulemarks"
     filename = module_name + ".txt"
-    with open(filename,"w") as file:
+    path = os.path.join(folder,filename)
+    with open(path,"w") as file:
         size = len(category_name)
         file.write("-----------------\n\n")
         file.write(f"Module name: {module_name}\n\n")
@@ -69,9 +71,11 @@ def save_module(module_name,final_mark,result,category_name,weights,avgs):
         file.write(f"Result: {result}\n\n")
 
 def view_saved_modules():
+    folder = "modulemarks"
     filename = input("Enter module name: ") + ".txt"
+    path = os.path.join(folder,filename)
     try:
-        with open(filename,"r") as file:
+        with open(path,"r") as file:
             contents = file.read()
         print(contents)
 
@@ -112,7 +116,12 @@ def calculate_module():
         save_module(module_name,final_mark,result,category_names,category_weights,category_averages)
 
 def list_saved_modules():
-    files = os.listdir()
+    files = os.listdir("modulemarks")
+    if len(files) == 0:
+        print("No saved modules found.")
+        return
+    print("\nSaved Modules:\n")
+    
     for file in files:
         if file.endswith(".txt"):
             module_name = file.removesuffix(".txt")
