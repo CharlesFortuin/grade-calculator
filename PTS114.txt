@@ -1,0 +1,18 @@
+-----------------
+
+Module name: PTS114
+
+-----------------
+
+A1
+Average is: 100.00%
+weight is: 40.00%
+
+A2
+Average is: 60.00%
+weight is: 60.00%
+
+-----------------
+Final mark: 76.00%
+Result: PASS
+

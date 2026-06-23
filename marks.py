@@ -52,7 +52,8 @@ def save_module_validation(letter):
     return letter.lower()
 
 def save_module(module_name,final_mark,result,category_name,weights,avgs):
-    with open("saved_modules.txt","a") as file:
+    filename = module_name + ".txt"
+    with open(filename,"w") as file:
         size = len(category_name)
         file.write("-----------------\n\n")
         file.write(f"Module name: {module_name}\n\n")
