@@ -1,3 +1,5 @@
+import os
+
 def num_categories():
     categories = int(input("Enter number of categories: "))
     return categories
@@ -109,11 +111,18 @@ def calculate_module():
     if save_module_validation(saved) == "y":
         save_module(module_name,final_mark,result,category_names,category_weights,category_averages)
 
+def list_saved_modules():
+    files = os.listdir()
+    for file in files:
+        if file.endswith(".txt"):
+            module_name = file.removesuffix(".txt")
+            print(module_name)
 
 def menu():
     print("1. Calculate Module Marks")
     print("2. View Module")
-    print("3. Exit\n")
+    print("3. List saved modules")
+    print("4. Exit\n")
     
     choice = input("Choice: ")
     return choice
@@ -129,6 +138,9 @@ def main():
             view_saved_modules()
         
         elif choice == "3":
+            list_saved_modules()
+
+        elif choice == "4":
             print("\nGoodbye!")
             break
 
