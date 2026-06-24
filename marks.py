@@ -50,10 +50,10 @@ def display(name,avgs,weights,final,result,modname):
     print(f"Final mark: {final:.2f}%\n")
     print(f"Result: {result}")
 
-def saveordelete_module_validation(letter):
+def yes_or_no_validation(letter,prompt):
     while letter.lower() != "y" and letter.lower() != "n":
         print("Error: Please enter y or n only")
-        letter = input("Save Module? (y/n): ")
+        letter = input(prompt)
     return letter.lower()
 
 def save_module(module_name,final_mark,result,category_name,weights,avgs):
@@ -87,6 +87,9 @@ def view_saved_modules():
 
 def calculate_module():
     module_name = input("Enter module name: ")
+    if not overwrite(module_name):
+        print("Calculation cancelled.")
+        return
     category_names = []
     category_averages = []
     category_weights = []
@@ -114,8 +117,9 @@ def calculate_module():
 
     display(category_names,category_averages,category_weights,final_mark,result,module_name)
     
-    saved = input("Save Module? (y/n): ")
-    if saveordelete_module_validation(saved) == "y":
+    prompt = "Save Module? (y/n): "
+    saved = input(prompt)
+    if yes_or_no_validation(saved,prompt) == "y":
         save_module(module_name,final_mark,result,category_names,category_weights,category_averages)
 
 def list_saved_modules():
@@ -136,8 +140,9 @@ def delete_module():
     filename = module_name + ".txt"
     path = os.path.join(folder,filename)
     if os.path.exists(path):
-        choice = input(f"Delete {module_name}? (y/n): ")
-        if saveordelete_module_validation(choice) == "y":
+        prompt = f"Delete {module_name}? (y/n): "
+        choice = input(prompt)
+        if yes_or_no_validation(choice,prompt) == "y":
             os.remove(path)
             print("Module successfully deleted")
         else:
@@ -163,6 +168,20 @@ def get_valid_float(prompt):
             return value
         except ValueError:
             print("Please enter a valid number.")
+
+def overwrite(module_name):
+    folder = "modulemarks"
+    filename = module_name + ".txt"
+    path = os.path.join(folder,filename)
+    if os.path.exists(path):
+        prompt = f"Module {module_name} already exists.\nOverwrite {module_name}? (y/n): "
+        choice = input(prompt)
+        if yes_or_no_validation(choice,prompt) == "y":
+            return True
+        else:
+            return False
+    else:
+        return True
     
 
 def menu():
