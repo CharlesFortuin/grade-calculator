@@ -1,21 +1,23 @@
 import os
 
 def num_categories():
-    categories = int(input("Enter number of categories: "))
+    prompt = "Enter number of categories: "
+    categories = get_valid_int(prompt)
     return categories
 
 def calc_average(category):
     total = 0.0
     
     print(f"\nEntering {category} marks")
-    
-    num_marks = int(input("Enter number of marks: "))
+    prompt1 = "Enter number of marks: "
+    num_marks = get_valid_int(prompt1)
+    prompt2 = "Enter mark(%): "
 
     for i in range(num_marks):
-        mark = float(input("Enter mark(%): "))
+        mark = get_valid_float(prompt2)
         while mark < 0 or mark > 100:
             print("Error: Mark must be between 0 and 100")
-            mark = float(input("Enter mark(%): "))
+            mark = get_valid_float(prompt2)
         total += mark
 
     average = total/num_marks
@@ -24,10 +26,11 @@ def calc_average(category):
 
 def get_weights(category):
     print(f"Entering {category} weighting")
-    weight = float(input("Enter weighting: "))
+    prompt = "Enter weighting: "
+    weight = get_valid_float(prompt)
     while weight < 0 or weight > 100:
         print("Error: Weight must be between 0 and 100")
-        weight = float(input("Enter weighting: "))
+        weight = get_valid_float(prompt)
     weight /= 100
     return weight
 
@@ -141,6 +144,25 @@ def delete_module():
             print("Module deletion cancelled")
     else:
         print("Module not found")
+
+def get_valid_int(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value <= 0:
+                print("Please enter a value greater that 0")
+            else:
+                return value
+        except ValueError:
+            print("Please enter a valid number.")
+
+def get_valid_float(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            return value
+        except ValueError:
+            print("Please enter a valid number.")
     
 
 def menu():
