@@ -93,10 +93,10 @@ def show_assessment_screen(window,module_name,assessment_categories):
         num_marks_box.grid(row=start_row+3,column=1)
         num_marks_boxes.append(num_marks_box)
     
-    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_assessment_info(window,category_name_boxes,weight_percentage_boxes,num_marks_boxes))
+    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_assessment_info(window,module_name,category_name_boxes,weight_percentage_boxes,num_marks_boxes))
     next_button.grid(row=start_row+4,column=0)
 
-def handle_assessment_info(window,categories_arr,weight_arr,num_marks_arr):
+def handle_assessment_info(window,module_name,categories_arr,weight_arr,num_marks_arr):
     category_names = []
     weight_percentages = []
     number_of_marks = []
@@ -110,8 +110,50 @@ def handle_assessment_info(window,categories_arr,weight_arr,num_marks_arr):
     print(weight_percentages)
     print(number_of_marks)
 
-    clear_window(window)
+    show_mark_entry_screen(window,module_name,category_names,weight_percentages,number_of_marks)
 
+def show_mark_entry_screen(window,module_name,categories_arr,weight_arr,num_marks_arr):
+    clear_window(window)
+    title = tk.Label(window,text="Marks Entry",font=("Arial",16,"bold"))
+    title.grid(row=0,column=0)
+
+    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=("Arial",12,"bold"))
+    mod_name.grid(row=1,column=0)
+
+    marks_arr = []
+
+    current_row = 2
+
+    for i in range(len(categories_arr)):
+        current_assessment_marks = []
+
+        category_name = tk.Label(window,text=f"{categories_arr[i]}",font=("Arial",12,"bold"))
+        category_name.grid(row=current_row,column=0)
+        current_row += 1
+
+        for j in range(num_marks_arr[i]):
+            mark_number = tk.Label(window,text=f"Mark {j+1}",font=("Arial",12,"bold"))
+            mark_number.grid(row=current_row,column=0)
+            mark_box = tk.Entry(window)
+            mark_box.grid(row=current_row,column=1)
+            current_assessment_marks.append(mark_box)
+            current_row += 1
+        marks_arr.append(current_assessment_marks)
+        current_row+=1
+        
+
+    calc_button = tk.Button(window,text="Calculate",font=("Arial",12,"bold"),command=lambda: handle_marks(window,module_name,categories_arr,weight_arr,marks_arr))
+    calc_button.grid(row=current_row+1,column=0)
+
+def handle_marks(window,module_name,categories_arr,weight_arr,marks_arr):
+    all_marks = []
+    for i in range(len(marks_arr)):
+        current_mark = []
+        for j in range(len(marks_arr[i])):
+            current_mark.append(float(marks_arr[i][j].get()))
+        all_marks.append(current_mark)
+
+    pass
 
 def main():
     window = create_window()
