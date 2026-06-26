@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from marks import calc_average, calculate_final_mark, results
 def create_window():
     window = tk.Tk()
     window.title("Grade Calculator")
@@ -103,7 +103,7 @@ def handle_assessment_info(window,module_name,categories_arr,weight_arr,num_mark
     for name in categories_arr:
         category_names.append(name.get())
     for weight in weight_arr:
-        weight_percentages.append(float(weight.get()))
+        weight_percentages.append(float(weight.get()) /100)
     for marks in num_marks_arr:
         number_of_marks.append(int(marks.get()))
     print(category_names)
@@ -132,7 +132,7 @@ def show_mark_entry_screen(window,module_name,categories_arr,weight_arr,num_mark
         current_row += 1
 
         for j in range(num_marks_arr[i]):
-            mark_number = tk.Label(window,text=f"Mark {j+1}",font=("Arial",12,"bold"))
+            mark_number = tk.Label(window,text=f"Mark {j+1}(%)",font=("Arial",12,"bold"))
             mark_number.grid(row=current_row,column=0)
             mark_box = tk.Entry(window)
             mark_box.grid(row=current_row,column=1)
@@ -152,8 +152,47 @@ def handle_marks(window,module_name,categories_arr,weight_arr,marks_arr):
         for j in range(len(marks_arr[i])):
             current_mark.append(float(marks_arr[i][j].get()))
         all_marks.append(current_mark)
+    category_averages = []
+    for category_marks in all_marks:
+        average = calc_average(category_marks)
+        category_averages.append(average)
+    final_mark = calculate_final_mark(category_averages,weight_arr)
+    result = results(final_mark)
+    show_results_screen(window,module_name,categories_arr,weight_arr,category_averages,final_mark,result)
 
-    pass
+def show_results_screen(window,module_name,categories_arr,weight_arr,category_averages,final_mark,result):
+    clear_window(window)
+    title = tk.Label(window,text="Results",font=("Arial",16,"bold"))
+    title.grid(row=0,column=0)
+
+    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=("Arial",12,"bold"))
+    mod_name.grid(row=1,column=0)
+
+    for i in range(len(categories_arr)):
+        start_row = 2 + i*4
+        category = tk.Label(window,text=f"{categories_arr[i]}",font=("Arial",12,"bold"))
+        category.grid(row=start_row,column=0)
+
+        average = tk.Label(window,text="Average: ",font=("Arial",12,"bold"))
+        average.grid(row=start_row+1,column=0)
+
+        average_display = tk.Label(window,text=f"{category_averages[i]}%",font=("Arial",12,"bold"))
+        average_display.grid(row=start_row+1,column=1)
+
+        weight = tk.Label(window,text="Weight: ",font=("Arial",12,"bold"))
+        weight.grid(row=start_row+2,column=0)
+
+        weight_display = tk.Label(window,text=f"{weight_arr[i]*100}%",font=("Arial",12,"bold"))
+        weight_display.grid(row=start_row+2,column=1)
+
+    finalmark = tk.Label(window,text="Final Mark: ",font=("Arial",12,"bold"))
+    finalmark.grid(row=start_row+4,column=0)
+
+    finalmark_display = tk.Label(window,text=f"{final_mark}%",font=("Arial",12,"bold"))
+    finalmark_display.grid(row=start_row+4,column=1)
+
+    result_display = tk.Label(window,text=f"{result}",font=("Arial",12,"bold"))
+    result_display.grid(row=start_row+5,column=0)
 
 def main():
     window = create_window()

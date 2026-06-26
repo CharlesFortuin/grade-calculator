@@ -194,6 +194,20 @@ def menu():
     choice = input("Choice: ")
     return choice
 
+def calc_average(marks):
+    nums = len(marks)
+    total = 0.0
+    for i in range(len(marks)):
+        total += marks[i]
+    average = total / nums
+    return average
+
+def calculate_final_mark(category_averages,weights):
+    final_mark = 0.0
+    for i in range(len(category_averages)):
+        final_mark += category_averages[i] * weights[i]
+    return final_mark
+
 def main():
     while True:
         choice = menu()
