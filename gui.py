@@ -5,25 +5,117 @@ def create_window():
     window.title("Grade Calculator")
     logo = tk.PhotoImage(file = "logo.png")
     window.iconphoto(True,logo)
-    window.geometry("400x300")
+    window.geometry("700x700")
     window.resizable(False,False)
     return window
 
-def home_screen(window):
+def clear_window(window):
+    for widget in window.winfo_children():
+        widget.destroy()
+
+def show_home_screen(window):
     title1 = tk.Label(window,text="Grade Calculator",font=("Arial",24,"bold"))
     title1.grid(row=0,column=0)
     title2 = tk.Label(window,text="Calculate and Manage Module Marks",font=("Arial",16,"bold"))
     title2.grid(row=1,column=0,pady=10)
-    calculate_button = tk.Button(window,text="Calculate Grade",font=("Arial",12,"bold"))
+
+    
+    calculate_button = tk.Button(window,text="Calculate Grade",font=("Arial",12,"bold"),command=lambda: show_module_info(window))
     calculate_button.grid(row=2,column=0,pady=10)
+
+
     saved_modules_button = tk.Button(window,text="View Saved Modules",font=("Arial",12,"bold"))
     saved_modules_button.grid(row=3,column=0,pady=10)
+
+
     exit_button = tk.Button(window,text="Exit",font=("Arial",12,"bold"),command=window.destroy)
     exit_button.grid(row=4,column=0,pady=10)
 
+def show_module_info(window):
+    clear_window(window)
+    title = tk.Label(window,text="Module Information",font=("Arial",16,"bold"))
+    title.grid(row=0,column=0)
+
+    module_name_label = tk.Label(window,text="Module Name: ",font=("Arial",12,"bold"))
+    module_name_label.grid(row=1,column=0)
+    module_name_box= tk.Entry(window)
+    module_name_box.grid(row=1,column=1)
+
+    module_categories_label = tk.Label(window,text="Number of Assessment Categories: ",font=("Arial",12,"bold"))
+    module_categories_label.grid(row=2,column=0)
+    module_categories_box= tk.Entry(window)
+    module_categories_box.grid(row=2,column=1)
+
+    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_module_info(window,module_name_box,module_categories_box))
+    next_button.grid(row=3,column=0)
+
+def handle_module_info(window,module_name_box,assessment_categories_box):
+    module_name = module_name_box.get()
+    assessment_categories = int(assessment_categories_box.get())
+    print(module_name)
+    print(assessment_categories)
+
+    show_assessment_screen(window,module_name,assessment_categories)
+
+def show_assessment_screen(window,module_name,assessment_categories):
+    clear_window(window)
+    title = tk.Label(window,text="Assessment Information",font=("Arial",16,"bold"))
+    title.grid(row=0,column=0)
+
+    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=("Arial",12,"bold"))
+    mod_name.grid(row=1,column=0)
+
+    category_name_boxes = []
+    weight_percentage_boxes = []
+    num_marks_boxes = []
+
+    for i in range (assessment_categories):
+        start_row = 2 + i*4
+
+        assessment_num = tk.Label(window,text=f"Assessment {i+1}",font=("Arial",12,"bold"))
+        assessment_num.grid(row=start_row,column=0)
+
+        category_name = tk.Label(window,text="Category Name: ",font=("Arial",12,"bold"))
+        category_name.grid(row=start_row+1,column=0)
+        category_name_box = tk.Entry(window)
+        category_name_box.grid(row=start_row+1,column=1)
+        category_name_boxes.append(category_name_box)
+
+        weight_percentage = tk.Label(window,text="Weight(%): ",font=("Arial",12,"bold"))
+        weight_percentage.grid(row=start_row+2,column=0)
+        weight_percentage_box = tk.Entry(window)
+        weight_percentage_box.grid(row=start_row+2,column=1)
+        weight_percentage_boxes.append(weight_percentage_box)
+
+        num_marks = tk.Label(window,text="Number of Marks: ",font=("Arial",12,"bold"))
+        num_marks.grid(row=start_row+3,column=0)
+        num_marks_box = tk.Entry(window)
+        num_marks_box.grid(row=start_row+3,column=1)
+        num_marks_boxes.append(num_marks_box)
+    
+    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_assessment_info(window,category_name_boxes,weight_percentage_boxes,num_marks_boxes))
+    next_button.grid(row=start_row+4,column=0)
+
+def handle_assessment_info(window,categories_arr,weight_arr,num_marks_arr):
+    category_names = []
+    weight_percentages = []
+    number_of_marks = []
+    for name in categories_arr:
+        category_names.append(name.get())
+    for weight in weight_arr:
+        weight_percentages.append(float(weight.get()))
+    for marks in num_marks_arr:
+        number_of_marks.append(int(marks.get()))
+    print(category_names)
+    print(weight_percentages)
+    print(number_of_marks)
+
+    clear_window(window)
+
+
 def main():
     window = create_window()
-    home_screen(window)
+    show_home_screen(window)
     window.mainloop()
 
 
