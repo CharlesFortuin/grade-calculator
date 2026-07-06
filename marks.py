@@ -184,6 +184,36 @@ def overwrite(module_name):
     else:
         return True
     
+def get_saved_modules():
+    folder = "modulemarks"
+    mod_names = []
+    files = os.listdir(folder)
+    for file in files:
+        if file.endswith(".txt"):
+            mod_names.append(file.removesuffix(".txt"))
+    return mod_names
+
+def load_module(module_name):
+    folder = "modulemarks"
+    filename = module_name + ".txt"
+    path = os.path.join(folder,filename)
+    try:
+        with open(path,"r") as file:
+            contents = file.read()
+
+    except FileNotFoundError:
+        return None
+
+    return contents
+
+def delete_saved_module(module_name):
+    folder = "modulemarks"
+    filename = module_name + ".txt"
+    path = os.path.join(folder,filename)
+    if os.path.exists(path):
+        os.remove(path)
+        return True
+    return False
 
 def menu():
     print("1. Calculate Module Marks")

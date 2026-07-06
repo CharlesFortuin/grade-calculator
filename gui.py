@@ -1,5 +1,5 @@
 import tkinter as tk
-from marks import calc_average, calculate_final_mark, results, save_module
+from marks import calc_average, calculate_final_mark, results, save_module, get_saved_modules, load_module,delete_saved_module
 
 def create_window():
     window = tk.Tk()
@@ -26,7 +26,7 @@ def show_home_screen(window):
     calculate_button.grid(row=2,column=0,pady=10)
 
 
-    saved_modules_button = tk.Button(window,text="View Saved Modules",font=("Arial",12,"bold"))
+    saved_modules_button = tk.Button(window,text="View Saved Modules",font=("Arial",12,"bold"),command=lambda: show_saved_modules(window))
     saved_modules_button.grid(row=3,column=0,pady=10)
 
 
@@ -213,8 +213,55 @@ def handle_save(window,module_name,final_mark,result,categories_arr,weight_arr,c
 def handle_home(window):
     show_home_screen(window)
 
+def show_saved_modules(window):
+    clear_window(window)
+
+    title = tk.Label(window,text="Saved Modules",font=("Arial",16,"bold"))
+    title.grid(row=0,column=0)
+
+    modules = get_saved_modules()
+    module_list = tk.Listbox(window)
+    module_list.grid(row=1,column=0)
+    for module in modules:
+        module_list.insert(tk.END,module)
+
+    open_button = tk.Button(window,text="Open",font=("Arial",12,"bold"),command=lambda: handle_open(window,module_list))
+    open_button.grid(row=2,column=0)
+    delete_button = tk.Button(window,text="Delete",font=("Arial",12,"bold"),command=lambda: handle_delete(window,module_list))
+    delete_button.grid(row=3,column=0)
+    home_button = tk.Button(window,text="Home",font=("Arial",12,"bold"),command=lambda: show_home_screen(window))
+    home_button.grid(row=4,column=0)
+
+def handle_open(window,module_list):
+    selected = module_list.curselection()
+    if not selected:
+        return
+    module_name = module_list.get(selected[0])
+    contents = load_module(module_name)
+    if contents is None:
+        return
+    show_saved_module(window,module_name,contents)
+
+def handle_delete(window,module_list):
+    selected = module_list.curselection()
+    if not selected:
+        return
+    module_name = module_list.get(selected[0])
+    delete_saved_module(module_name)
+    show_saved_modules(window)
 
 
+def show_saved_module(window,module_name,contents):
+    clear_window(window)
+
+    title = tk.Label(window,text=f"{module_name}",font=("Arial",16,"bold"))
+    title.grid(row=0,column=0)
+
+    info = tk.Label(window,text=f"{contents}",font=("Arial",12,"bold"))
+    info.grid(row=1,column=0)
+
+    home_button = tk.Button(window,text="Home",font=("Arial",12,"bold"),command=lambda: show_home_screen(window))
+    home_button.grid(row=2,column=0)
 
 def main():
     window = create_window()
