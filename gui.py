@@ -1,5 +1,6 @@
 import tkinter as tk
-from marks import calc_average, calculate_final_mark, results
+from marks import calc_average, calculate_final_mark, results, save_module
+
 def create_window():
     window = tk.Tk()
     window.title("Grade Calculator")
@@ -14,6 +15,7 @@ def clear_window(window):
         widget.destroy()
 
 def show_home_screen(window):
+    clear_window(window)
     title1 = tk.Label(window,text="Grade Calculator",font=("Arial",24,"bold"))
     title1.grid(row=0,column=0)
     title2 = tk.Label(window,text="Calculate and Manage Module Marks",font=("Arial",16,"bold"))
@@ -176,23 +178,43 @@ def show_results_screen(window,module_name,categories_arr,weight_arr,category_av
         average = tk.Label(window,text="Average: ",font=("Arial",12,"bold"))
         average.grid(row=start_row+1,column=0)
 
-        average_display = tk.Label(window,text=f"{category_averages[i]}%",font=("Arial",12,"bold"))
+        average_display = tk.Label(window,text=f"{category_averages[i]:.2f}%",font=("Arial",12,"bold"))
         average_display.grid(row=start_row+1,column=1)
 
         weight = tk.Label(window,text="Weight: ",font=("Arial",12,"bold"))
         weight.grid(row=start_row+2,column=0)
 
-        weight_display = tk.Label(window,text=f"{weight_arr[i]*100}%",font=("Arial",12,"bold"))
+        weight_display = tk.Label(window,text=f"{weight_arr[i]*100:.3f}%",font=("Arial",12,"bold"))
         weight_display.grid(row=start_row+2,column=1)
 
     finalmark = tk.Label(window,text="Final Mark: ",font=("Arial",12,"bold"))
     finalmark.grid(row=start_row+4,column=0)
 
-    finalmark_display = tk.Label(window,text=f"{final_mark}%",font=("Arial",12,"bold"))
+    finalmark_display = tk.Label(window,text=f"{final_mark:.2f}%",font=("Arial",12,"bold"))
     finalmark_display.grid(row=start_row+4,column=1)
 
     result_display = tk.Label(window,text=f"{result}",font=("Arial",12,"bold"))
     result_display.grid(row=start_row+5,column=0)
+
+    save_mod_button = tk.Button(window,text="Save Module",font=("Arial",12,"bold"),command=lambda: handle_save(window,module_name,final_mark,result,categories_arr,weight_arr,category_averages,start_row,save_mod_button))
+    save_mod_button.grid(row=start_row+7,column=0)
+
+    back_home_button = tk.Button(window,text="Home",font=("Arial",12,"bold"),command=lambda: handle_home(window))
+    back_home_button.grid(row=start_row+11,column=0)
+
+def handle_save(window,module_name,final_mark,result,categories_arr,weight_arr,category_averages,start_row,save_mod_button):
+    save_module(module_name,final_mark,result,categories_arr,weight_arr,category_averages)
+
+    status = tk.Label(window,text="Module saved successfully!",font=("Arial",12,"bold"),fg="green")
+    status.grid(row=start_row+9,column=0)
+
+    save_mod_button.config(state="disabled")
+
+def handle_home(window):
+    show_home_screen(window)
+
+
+
 
 def main():
     window = create_window()

@@ -58,6 +58,7 @@ def yes_or_no_validation(letter,prompt):
 
 def save_module(module_name,final_mark,result,category_name,weights,avgs):
     folder = "modulemarks"
+    os.makedirs(folder,exist_ok=True)
     filename = module_name + ".txt"
     path = os.path.join(folder,filename)
     with open(path,"w") as file:

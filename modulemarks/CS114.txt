@@ -5,14 +5,10 @@ Module name: CS114
 -----------------
 
 A1
-Average is: 100.00%
-weight is: 50.00%
-
-A2
 Average is: 80.00%
-weight is: 50.00%
+weight is: 100.00%
 
 -----------------
-Final mark: 90.00%
+Final mark: 80.00%
 Result: PASS
 
