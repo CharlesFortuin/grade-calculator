@@ -48,12 +48,30 @@ def show_module_info(window):
     module_categories_box= tk.Entry(window)
     module_categories_box.grid(row=2,column=1)
 
-    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_module_info(window,module_name_box,module_categories_box))
-    next_button.grid(row=3,column=0)
+    error_label = tk.Label(window,text="",fg="red")
+    error_label.grid(row=3,column=0)
 
-def handle_module_info(window,module_name_box,assessment_categories_box):
-    module_name = module_name_box.get()
-    assessment_categories = int(assessment_categories_box.get())
+    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_module_info(window,module_name_box,module_categories_box,error_label))
+    next_button.grid(row=4,column=0)
+
+def handle_module_info(window,module_name_box,assessment_categories_box,error_label):
+    error_label.config(text="")
+    module_name = module_name_box.get().strip()
+
+    if not module_name:
+        error_label.config(text="Please Enter a Module Name")
+        return
+
+    try:
+        assessment_categories = int(assessment_categories_box.get())
+        if assessment_categories <= 0:
+            error_label.config(text="Please Enter a Positive Whole Number")
+            return
+    except ValueError:
+        error_label.config(text="Please Enter a Valid Number")
+        return
+
+
     print(module_name)
     print(assessment_categories)
 
@@ -94,20 +112,59 @@ def show_assessment_screen(window,module_name,assessment_categories):
         num_marks_box = tk.Entry(window)
         num_marks_box.grid(row=start_row+3,column=1)
         num_marks_boxes.append(num_marks_box)
-    
-    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_assessment_info(window,module_name,category_name_boxes,weight_percentage_boxes,num_marks_boxes))
-    next_button.grid(row=start_row+4,column=0)
 
-def handle_assessment_info(window,module_name,categories_arr,weight_arr,num_marks_arr):
+        error_label = tk.Label(window,text="",fg="red")
+        error_label.grid(row=start_row+4)
+    
+    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_assessment_info(
+        window,module_name,category_name_boxes,weight_percentage_boxes,num_marks_boxes,error_label))
+    next_button.grid(row=start_row+5,column=0)
+
+def handle_assessment_info(window,module_name,categories_arr,weight_arr,num_marks_arr,error_label):
+    error_label.config(text="")
     category_names = []
     weight_percentages = []
     number_of_marks = []
     for name in categories_arr:
-        category_names.append(name.get())
+        category = name.get().strip()
+        if not category:
+            error_label.config(text="Category Names Cannot Be Empty")
+            return
+        category_names.append(category)
+
+    for name in category_names:
+        if category_names.count(name) > 1:
+            error_label.config(text="Category Names Must Be Unique")
+            return
+    
     for weight in weight_arr:
-        weight_percentages.append(float(weight.get()) /100)
+        try:
+            value = float(weight.get())
+        except ValueError:
+            error_label.config(text="Please Enter Valid Weight Values")
+            return
+        if value < 0 or value > 100:
+            error_label.config(text="Weights Must Be Between 0 and 100")
+            return
+
+        weight_percentages.append(value/100)
+    
     for marks in num_marks_arr:
-        number_of_marks.append(int(marks.get()))
+        try:
+            number = int(marks.get())
+        except ValueError:
+            error_label.config(text="Please Enter a Valid Number of Marks")
+            return
+        if number <= 0:
+            error_label.config(text="Number of Marks Must Be Greater Than 0")
+            return
+        number_of_marks.append(number)
+
+    total_weight = sum(weight_percentages)
+
+    if abs(total_weight - 1.0) > 0.001:
+        error_label.config(text="Weights must add up to 100%.")
+        return
     print(category_names)
     print(weight_percentages)
     print(number_of_marks)
@@ -143,16 +200,27 @@ def show_mark_entry_screen(window,module_name,categories_arr,weight_arr,num_mark
         marks_arr.append(current_assessment_marks)
         current_row+=1
         
+    error_label = tk.Label(window,text="",fg="red")
+    error_label.grid(row=current_row+1,column=0)
+    calc_button = tk.Button(window,text="Calculate",font=("Arial",12,"bold"),command=lambda: handle_marks(window,module_name,categories_arr,weight_arr,marks_arr,error_label))
+    calc_button.grid(row=current_row+2,column=0)
 
-    calc_button = tk.Button(window,text="Calculate",font=("Arial",12,"bold"),command=lambda: handle_marks(window,module_name,categories_arr,weight_arr,marks_arr))
-    calc_button.grid(row=current_row+1,column=0)
-
-def handle_marks(window,module_name,categories_arr,weight_arr,marks_arr):
+def handle_marks(window,module_name,categories_arr,weight_arr,marks_arr,error_label):
+    error_label.config(text="")
     all_marks = []
     for i in range(len(marks_arr)):
         current_mark = []
         for j in range(len(marks_arr[i])):
-            current_mark.append(float(marks_arr[i][j].get()))
+            try:
+                mark = float(marks_arr[i][j].get())
+            except ValueError:
+                error_label.config(text="Please Enter Valid Mark Values")
+                return
+            if mark < 0 or mark > 100:
+                error_label.config(text="Marks Must Be Between 0 and 100")
+                return
+            
+            current_mark.append(mark)
         all_marks.append(current_mark)
     category_averages = []
     for category_marks in all_marks:
