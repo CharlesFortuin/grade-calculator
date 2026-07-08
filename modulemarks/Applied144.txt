@@ -1,0 +1,14 @@
+-----------------
+
+Module name: Applied144
+
+-----------------
+
+Exam
+Average is: 80.00%
+weight is: 100.00%
+
+-----------------
+Final mark: 80.00%
+Result: PASS
+

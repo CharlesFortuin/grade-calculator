@@ -1,170 +1,149 @@
-# \# Grade Calculator
+# Grade Calculator
 
-# 
+A desktop application built with **Python** and **Tkinter** that allows students to calculate, manage, and save module grades using custom assessment categories and weightings.
 
-# A Python application that allows students to calculate and manage module marks using custom assessment categories and weightings.
+The application provides an intuitive graphical interface where users can create assessment categories, enter marks, calculate weighted final grades, and save results for future reference.
 
-# 
+---
 
-# \## Features
+## Features
 
-# 
+- Graphical User Interface (Tkinter)
+- Custom assessment category names
+- Custom assessment weightings
+- Multiple marks per assessment category
+- Automatic category average calculation
+- Automatic weighted final mark calculation
+- Pass/Fail determination
+- Save module results to individual text files
+- View saved modules
+- Open saved modules
+- Delete saved modules
+- Overwrite confirmation when saving existing modules
+- Comprehensive input validation
+- Scrollable marks entry screen for modules with many assessments
 
-# \* Custom category names
+---
 
-# \* Custom weightings
+## Technologies Used
 
-# \* Multiple marks per category
+- Python 3
+- Tkinter
+- File Handling
+- Exception Handling
+- Modular Programming
+- Git & GitHub
 
-# \* Automatic final mark calculation
+---
 
-# \* Pass/fail determination
+## Project Structure
 
-# \* Save module results to individual text files
+```text
+grade-calculator/
+│
+├── gui.py
+├── marks.py
+├── logo.png
+├── modulemarks/
+│   ├── CS114.txt
+│   ├── PTS114.txt
+│   └── ...
+├── screenshots/
+│   ├── home.png
+│   ├── module-info.png
+│   ├── assessment-info.png
+│   ├── marks-entry.png
+│   ├── results.png
+│   └── saved-modules.png
+└── README.md
+```
 
-# \* View saved modules
+---
 
-# \* List all saved modules
+## Screenshots
 
-# \* Delete saved modules
+### Home Screen
 
-# \* Overwrite protection for existing modules
+![Home Screen](screenshots/home.png)
 
-# \* Integer and floating-point input validation
+### Module Information
 
-# \* Yes/No response validation
+![Module Information](screenshots/module-info.png)
 
-# 
+### Assessment Information
 
-# \## Technologies
+![Assessment Information](screenshots/assessment-info.png)
 
-# 
+### Marks Entry
 
-# \* Python 3
+![Marks Entry](screenshots/marks-entry.png)
 
-# \* File Handling
+### Results
 
-# \* Exception Handling
+![Results](screenshots/results.png)
 
-# \* Git \& GitHub
+### Saved Modules
 
-# 
+![Saved Modules](screenshots/saved-modules.png)
 
-# \## Project Structure
+---
 
-# 
+## How to Run
 
-# ```text
+1. Clone the repository.
 
-# grade-calculator/
+```bash
+git clone https://github.com/CharlesFortuin/grade-calculator.git
+```
 
-# │
+2. Navigate to the project directory.
 
-# ├── marks.py
+```bash
+cd grade-calculator
+```
 
-# ├── README.md
+3. Run the application.
 
-# └── modulemarks/
+```bash
+python gui.py
+```
 
-# &#x20;   ├── CS114.txt
+---
 
-# &#x20;   ├── PTS114.txt
+## Skills Demonstrated
 
-# &#x20;   └── ...
+This project demonstrates experience with:
 
-# ```
+- GUI development using Tkinter
+- Modular software design
+- User input validation
+- Exception handling
+- Dynamic widget creation
+- File management
+- Nested lists and data processing
+- Separation of business logic from presentation
+- Git branching and version control
 
-# 
+---
 
-# \## How to Run
+## Future Improvements
 
-# 
+Potential future enhancements include:
 
-# 1\. Clone the repository:
+- Editing existing saved modules
+- Exporting results to CSV
+- GPA calculation across multiple modules
+- Search functionality
+- Data visualisation (graphs/charts)
+- Dark mode
 
-# 
+---
 
-# ```bash
+## Author
 
-# git clone https://github.com/CharlesFortuin/grade-calculator.git
+**Charles Fortuin**
 
-# ```
+BSc Computer Science  
+Stellenbosch University
 
-# 
-
-# 2\. Navigate to the project directory:
-
-# 
-
-# ```bash
-
-# cd grade-calculator
-
-# ```
-
-# 
-
-# 3\. Run the program:
-
-# 
-
-# ```bash
-
-# python marks.py
-
-# ```
-
-# 
-
-# \## What I Learned
-
-# 
-
-# This project helped me practice:
-
-# 
-
-# \* Functions and modular programming
-
-# \* Lists and loops
-
-# \* File handling
-
-# \* Input validation
-
-# \* Exception handling
-
-# \* Git branching and merging
-
-# \* Organizing larger Python programs
-
-# 
-
-# \## Future Improvements
-
-# 
-
-# \* Graphical User Interface (GUI)
-
-# \* Edit existing modules
-
-# \* Export data to CSV
-
-# \* Search functionality
-
-# \* Statistics and analytics
-
-# 
-
-# \## Author
-
-# 
-
-# Charles Fortuin
-
-# BSc Computer Science
-
-# Stellenbosch University
-
-
-
+GitHub: https://github.com/CharlesFortuin
