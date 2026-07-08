@@ -239,6 +239,12 @@ def calculate_final_mark(category_averages,weights):
         final_mark += category_averages[i] * weights[i]
     return final_mark
 
+def module_exists(module_name):
+    folder = "modulemarks"
+    filename = module_name + ".txt"
+    path = os.path.join(folder,filename)
+    return os.path.exists(path)
+
 def main():
     while True:
         choice = menu()

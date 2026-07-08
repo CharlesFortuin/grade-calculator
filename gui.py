@@ -1,5 +1,23 @@
 import tkinter as tk
-from marks import calc_average, calculate_final_mark, results, save_module, get_saved_modules, load_module,delete_saved_module
+from tkinter import messagebox
+from marks import ( calc_average, 
+                    calculate_final_mark, 
+                    results, save_module, 
+                    get_saved_modules, 
+                    load_module,
+                    delete_saved_module,
+                    module_exists)
+
+TITLE_FONT = ("Arial", 18, "bold")
+SUBTITLE_FONT = ("Arial", 14)
+LABEL_FONT = ("Arial", 12)
+BUTTON_FONT = ("Arial", 12, "bold")
+
+ENTRY_WIDTH = 30
+BUTTON_WIDTH = 20
+
+PAD_X = 10
+PAD_Y = 5
 
 def create_window():
     window = tk.Tk()
@@ -16,43 +34,47 @@ def clear_window(window):
 
 def show_home_screen(window):
     clear_window(window)
-    title1 = tk.Label(window,text="Grade Calculator",font=("Arial",24,"bold"))
-    title1.grid(row=0,column=0)
-    title2 = tk.Label(window,text="Calculate and Manage Module Marks",font=("Arial",16,"bold"))
+    title1 = tk.Label(window,text="Grade Calculator",font=("Arial", 24, "bold"))
+    title1.grid(row=0,column=0, padx=PAD_X, pady=PAD_Y)
+    title2 = tk.Label(window,text="Calculate and Manage Module Marks",font=TITLE_FONT)
     title2.grid(row=1,column=0,pady=10)
 
     
-    calculate_button = tk.Button(window,text="Calculate Grade",font=("Arial",12,"bold"),command=lambda: show_module_info(window))
+    calculate_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Calculate Grade",font=BUTTON_FONT,command=lambda: show_module_info(window))
     calculate_button.grid(row=2,column=0,pady=10)
 
 
-    saved_modules_button = tk.Button(window,text="View Saved Modules",font=("Arial",12,"bold"),command=lambda: show_saved_modules(window))
+    saved_modules_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="View Saved Modules",font=BUTTON_FONT,command=lambda: show_saved_modules(window))
     saved_modules_button.grid(row=3,column=0,pady=10)
 
 
-    exit_button = tk.Button(window,text="Exit",font=("Arial",12,"bold"),command=window.destroy)
+    exit_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Exit",font=BUTTON_FONT,command=window.destroy)
     exit_button.grid(row=4,column=0,pady=10)
 
 def show_module_info(window):
     clear_window(window)
-    title = tk.Label(window,text="Module Information",font=("Arial",16,"bold"))
-    title.grid(row=0,column=0)
+    title = tk.Label(window,text="Module Information",font=TITLE_FONT)
+    title.grid(row=0,column=0, padx=PAD_X, pady=PAD_Y)
 
-    module_name_label = tk.Label(window,text="Module Name: ",font=("Arial",12,"bold"))
-    module_name_label.grid(row=1,column=0)
-    module_name_box= tk.Entry(window)
-    module_name_box.grid(row=1,column=1)
+    module_name_label = tk.Label(window,text="Module Name: ",font=BUTTON_FONT)
+    module_name_label.grid(row=1,column=0, padx=PAD_X, pady=PAD_Y)
+    module_name_box= tk.Entry(window, width=ENTRY_WIDTH)
+    module_name_box.grid(row=1,column=1, padx=PAD_X, pady=PAD_Y)
 
-    module_categories_label = tk.Label(window,text="Number of Assessment Categories: ",font=("Arial",12,"bold"))
-    module_categories_label.grid(row=2,column=0)
-    module_categories_box= tk.Entry(window)
-    module_categories_box.grid(row=2,column=1)
+    module_categories_label = tk.Label(window,text="Number of Assessment Categories: ",font=BUTTON_FONT)
+    module_categories_label.grid(row=2,column=0, padx=PAD_X, pady=PAD_Y)
+    module_categories_box= tk.Entry(window, width=ENTRY_WIDTH)
+    module_categories_box.grid(row=2,column=1, padx=PAD_X, pady=PAD_Y)
 
     error_label = tk.Label(window,text="",fg="red")
-    error_label.grid(row=3,column=0)
+    error_label.grid(row=3,column=0, padx=PAD_X, pady=PAD_Y)
 
-    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_module_info(window,module_name_box,module_categories_box,error_label))
-    next_button.grid(row=4,column=0)
+    next_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Next",font=BUTTON_FONT,command=lambda: handle_module_info(window,module_name_box,module_categories_box,error_label))
+    next_button.grid(row=4,column=0, padx=PAD_X, pady=PAD_Y)
 
 def handle_module_info(window,module_name_box,assessment_categories_box,error_label):
     error_label.config(text="")
@@ -79,11 +101,11 @@ def handle_module_info(window,module_name_box,assessment_categories_box,error_la
 
 def show_assessment_screen(window,module_name,assessment_categories):
     clear_window(window)
-    title = tk.Label(window,text="Assessment Information",font=("Arial",16,"bold"))
-    title.grid(row=0,column=0)
+    title = tk.Label(window,text="Assessment Information",font=TITLE_FONT)
+    title.grid(row=0,column=0, padx=PAD_X, pady=PAD_Y)
 
-    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=("Arial",12,"bold"))
-    mod_name.grid(row=1,column=0)
+    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=BUTTON_FONT)
+    mod_name.grid(row=1,column=0, padx=PAD_X, pady=PAD_Y)
 
     category_name_boxes = []
     weight_percentage_boxes = []
@@ -92,33 +114,32 @@ def show_assessment_screen(window,module_name,assessment_categories):
     for i in range (assessment_categories):
         start_row = 2 + i*4
 
-        assessment_num = tk.Label(window,text=f"Assessment {i+1}",font=("Arial",12,"bold"))
-        assessment_num.grid(row=start_row,column=0)
+        assessment_num = tk.Label(window,text=f"Assessment {i+1}",font=BUTTON_FONT)
+        assessment_num.grid(row=start_row,column=0, padx=PAD_X, pady=PAD_Y)
 
-        category_name = tk.Label(window,text="Category Name: ",font=("Arial",12,"bold"))
-        category_name.grid(row=start_row+1,column=0)
-        category_name_box = tk.Entry(window)
-        category_name_box.grid(row=start_row+1,column=1)
+        category_name = tk.Label(window,text="Category Name: ",font=BUTTON_FONT)
+        category_name.grid(row=start_row+1,column=0, padx=PAD_X, pady=PAD_Y)
+        category_name_box = tk.Entry(window, width=ENTRY_WIDTH)
+        category_name_box.grid(row=start_row+1,column=1, padx=PAD_X, pady=PAD_Y)
         category_name_boxes.append(category_name_box)
 
-        weight_percentage = tk.Label(window,text="Weight(%): ",font=("Arial",12,"bold"))
-        weight_percentage.grid(row=start_row+2,column=0)
-        weight_percentage_box = tk.Entry(window)
-        weight_percentage_box.grid(row=start_row+2,column=1)
+        weight_percentage = tk.Label(window,text="Weight(%): ",font=BUTTON_FONT)
+        weight_percentage.grid(row=start_row+2,column=0, padx=PAD_X, pady=PAD_Y)
+        weight_percentage_box = tk.Entry(window, width=ENTRY_WIDTH)
+        weight_percentage_box.grid(row=start_row+2,column=1, padx=PAD_X, pady=PAD_Y)
         weight_percentage_boxes.append(weight_percentage_box)
 
-        num_marks = tk.Label(window,text="Number of Marks: ",font=("Arial",12,"bold"))
-        num_marks.grid(row=start_row+3,column=0)
-        num_marks_box = tk.Entry(window)
-        num_marks_box.grid(row=start_row+3,column=1)
+        num_marks = tk.Label(window,text="Number of Marks: ",font=BUTTON_FONT)
+        num_marks.grid(row=start_row+3,column=0, padx=PAD_X, pady=PAD_Y)
+        num_marks_box = tk.Entry(window, width=ENTRY_WIDTH)
+        num_marks_box.grid(row=start_row+3,column=1, padx=PAD_X, pady=PAD_Y)
         num_marks_boxes.append(num_marks_box)
-
-        error_label = tk.Label(window,text="",fg="red")
-        error_label.grid(row=start_row+4)
-    
-    next_button = tk.Button(window,text="Next",font=("Arial",12,"bold"),command=lambda: handle_assessment_info(
+    error_label = tk.Label(window,text="",fg="red")
+    error_label.grid(row=start_row+4, padx=PAD_X, pady=PAD_Y)
+    next_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Next",font=BUTTON_FONT,command=lambda: handle_assessment_info(
         window,module_name,category_name_boxes,weight_percentage_boxes,num_marks_boxes,error_label))
-    next_button.grid(row=start_row+5,column=0)
+    next_button.grid(row=start_row+5,column=0, padx=PAD_X, pady=PAD_Y)
 
 def handle_assessment_info(window,module_name,categories_arr,weight_arr,num_marks_arr,error_label):
     error_label.config(text="")
@@ -173,11 +194,43 @@ def handle_assessment_info(window,module_name,categories_arr,weight_arr,num_mark
 
 def show_mark_entry_screen(window,module_name,categories_arr,weight_arr,num_marks_arr):
     clear_window(window)
-    title = tk.Label(window,text="Marks Entry",font=("Arial",16,"bold"))
-    title.grid(row=0,column=0)
 
-    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=("Arial",12,"bold"))
-    mod_name.grid(row=1,column=0)
+    canvas = tk.Canvas(window, highlightthickness=0)
+    scrollbar = tk.Scrollbar(window, orient="vertical", command=canvas.yview)
+
+    scroll_frame = tk.Frame(canvas)
+
+    canvas_window = canvas.create_window(
+        (0, 0),
+        window=scroll_frame,
+        anchor="nw"
+    )
+
+    def resize_frame(event):
+        canvas.itemconfig(canvas_window, width=event.width)
+
+    canvas.bind("<Configure>", resize_frame)
+
+    scroll_frame.bind(
+        "<Configure>",
+        lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+    )
+
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    canvas.pack(side="left", fill="both", expand=True)
+    scrollbar.pack(side="right", fill="y")
+
+    canvas.bind_all(
+        "<MouseWheel>",
+        lambda event: canvas.yview_scroll(int(-event.delta / 120), "units")
+    )
+
+    title = tk.Label(scroll_frame,text="Marks Entry",font=TITLE_FONT)
+    title.grid(row=0,column=0, padx=PAD_X, pady=PAD_Y)
+
+    mod_name = tk.Label(scroll_frame,text=f"Module Name: {module_name}",font=BUTTON_FONT)
+    mod_name.grid(row=1,column=0, padx=PAD_X, pady=PAD_Y)
 
     marks_arr = []
 
@@ -186,24 +239,40 @@ def show_mark_entry_screen(window,module_name,categories_arr,weight_arr,num_mark
     for i in range(len(categories_arr)):
         current_assessment_marks = []
 
-        category_name = tk.Label(window,text=f"{categories_arr[i]}",font=("Arial",12,"bold"))
-        category_name.grid(row=current_row,column=0)
+        category_name = tk.Label(scroll_frame,text=categories_arr[i],font=BUTTON_FONT)
+        category_name.grid(row=current_row,column=0, padx=PAD_X, pady=PAD_Y)
         current_row += 1
 
         for j in range(num_marks_arr[i]):
-            mark_number = tk.Label(window,text=f"Mark {j+1}(%)",font=("Arial",12,"bold"))
-            mark_number.grid(row=current_row,column=0)
-            mark_box = tk.Entry(window)
-            mark_box.grid(row=current_row,column=1)
+            mark_number = tk.Label(scroll_frame,text=f"Mark {j+1}(%)",font=BUTTON_FONT)
+            mark_number.grid(row=current_row,column=0, padx=PAD_X, pady=PAD_Y)
+
+            mark_box = tk.Entry(scroll_frame, width=ENTRY_WIDTH)
+            mark_box.grid(row=current_row,column=1, padx=PAD_X, pady=PAD_Y)
+
             current_assessment_marks.append(mark_box)
             current_row += 1
+
         marks_arr.append(current_assessment_marks)
-        current_row+=1
-        
-    error_label = tk.Label(window,text="",fg="red")
-    error_label.grid(row=current_row+1,column=0)
-    calc_button = tk.Button(window,text="Calculate",font=("Arial",12,"bold"),command=lambda: handle_marks(window,module_name,categories_arr,weight_arr,marks_arr,error_label))
-    calc_button.grid(row=current_row+2,column=0)
+        current_row += 1
+
+    error_label = tk.Label(scroll_frame,text="",fg="red")
+    error_label.grid(row=current_row+1,column=0, padx=PAD_X, pady=PAD_Y)
+
+    calc_button = tk.Button(
+        scroll_frame,
+        text="Calculate",
+        font=BUTTON_FONT,
+        command=lambda: handle_marks(
+            window,
+            module_name,
+            categories_arr,
+            weight_arr,
+            marks_arr,
+            error_label
+        )
+    )
+    calc_button.grid(row=current_row+2,column=0, padx=PAD_X, pady=PAD_Y)
 
 def handle_marks(window,module_name,categories_arr,weight_arr,marks_arr,error_label):
     error_label.config(text="")
@@ -232,51 +301,60 @@ def handle_marks(window,module_name,categories_arr,weight_arr,marks_arr,error_la
 
 def show_results_screen(window,module_name,categories_arr,weight_arr,category_averages,final_mark,result):
     clear_window(window)
-    title = tk.Label(window,text="Results",font=("Arial",16,"bold"))
-    title.grid(row=0,column=0)
+    title = tk.Label(window,text="Results",font=TITLE_FONT)
+    title.grid(row=0,column=0, padx=PAD_X, pady=PAD_Y)
 
-    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=("Arial",12,"bold"))
-    mod_name.grid(row=1,column=0)
+    mod_name = tk.Label(window,text=f"Module Name: {module_name}",font=BUTTON_FONT)
+    mod_name.grid(row=1,column=0, padx=PAD_X, pady=PAD_Y)
 
     for i in range(len(categories_arr)):
         start_row = 2 + i*4
-        category = tk.Label(window,text=f"{categories_arr[i]}",font=("Arial",12,"bold"))
-        category.grid(row=start_row,column=0)
+        category = tk.Label(window,text=f"{categories_arr[i]}",font=BUTTON_FONT)
+        category.grid(row=start_row,column=0, padx=PAD_X, pady=PAD_Y)
 
-        average = tk.Label(window,text="Average: ",font=("Arial",12,"bold"))
-        average.grid(row=start_row+1,column=0)
+        average = tk.Label(window,text="Average: ",font=BUTTON_FONT)
+        average.grid(row=start_row+1,column=0, padx=PAD_X, pady=PAD_Y)
 
-        average_display = tk.Label(window,text=f"{category_averages[i]:.2f}%",font=("Arial",12,"bold"))
-        average_display.grid(row=start_row+1,column=1)
+        average_display = tk.Label(window,text=f"{category_averages[i]:.2f}%",font=BUTTON_FONT)
+        average_display.grid(row=start_row+1,column=1, padx=PAD_X, pady=PAD_Y)
 
-        weight = tk.Label(window,text="Weight: ",font=("Arial",12,"bold"))
-        weight.grid(row=start_row+2,column=0)
+        weight = tk.Label(window,text="Weight: ",font=BUTTON_FONT)
+        weight.grid(row=start_row+2,column=0, padx=PAD_X, pady=PAD_Y)
 
-        weight_display = tk.Label(window,text=f"{weight_arr[i]*100:.3f}%",font=("Arial",12,"bold"))
-        weight_display.grid(row=start_row+2,column=1)
+        weight_display = tk.Label(window,text=f"{weight_arr[i]*100:.3f}%",font=BUTTON_FONT)
+        weight_display.grid(row=start_row+2,column=1, padx=PAD_X, pady=PAD_Y)
 
-    finalmark = tk.Label(window,text="Final Mark: ",font=("Arial",12,"bold"))
-    finalmark.grid(row=start_row+4,column=0)
+    finalmark = tk.Label(window,text="Final Mark: ",font=BUTTON_FONT)
+    finalmark.grid(row=start_row+4,column=0, padx=PAD_X, pady=PAD_Y)
 
-    finalmark_display = tk.Label(window,text=f"{final_mark:.2f}%",font=("Arial",12,"bold"))
-    finalmark_display.grid(row=start_row+4,column=1)
+    finalmark_display = tk.Label(window,text=f"{final_mark:.2f}%",font=BUTTON_FONT)
+    finalmark_display.grid(row=start_row+4,column=1, padx=PAD_X, pady=PAD_Y)
 
-    result_display = tk.Label(window,text=f"{result}",font=("Arial",12,"bold"))
-    result_display.grid(row=start_row+5,column=0)
+    result_display = tk.Label(window,text=f"{result}",font=BUTTON_FONT)
+    result_display.grid(row=start_row+5,column=0, padx=PAD_X, pady=PAD_Y)
 
-    save_mod_button = tk.Button(window,text="Save Module",font=("Arial",12,"bold"),command=lambda: handle_save(window,module_name,final_mark,result,categories_arr,weight_arr,category_averages,start_row,save_mod_button))
-    save_mod_button.grid(row=start_row+7,column=0)
+    save_mod_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Save Module",font=BUTTON_FONT,command=lambda: handle_save(window,module_name,final_mark,result,categories_arr,weight_arr,category_averages,start_row,save_mod_button))
+    save_mod_button.grid(row=start_row+7,column=0, padx=PAD_X, pady=PAD_Y)
 
-    back_home_button = tk.Button(window,text="Home",font=("Arial",12,"bold"),command=lambda: handle_home(window))
-    back_home_button.grid(row=start_row+11,column=0)
+    back_home_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Home",font=BUTTON_FONT,command=lambda: handle_home(window))
+    back_home_button.grid(row=start_row+11,column=0, padx=PAD_X, pady=PAD_Y)
 
 def handle_save(window,module_name,final_mark,result,categories_arr,weight_arr,category_averages,start_row,save_mod_button):
-    save_module(module_name,final_mark,result,categories_arr,weight_arr,category_averages)
+    if not module_exists(module_name):
+        save_module(module_name,final_mark,result,categories_arr,weight_arr,category_averages)
+        status = tk.Label(window,text="Module saved successfully!",font=BUTTON_FONT,fg="green")
+        status.grid(row=start_row+9,column=0, padx=PAD_X, pady=PAD_Y)
+        save_mod_button.config(state="disabled")
+    else:
+        overwrite = messagebox.askyesno("Module Exists",f"'{module_name}' already exists.\n\nDo you want to overwrite it?")
+        if overwrite:
+            save_module(module_name,final_mark,result,categories_arr,weight_arr,category_averages)
+            status = tk.Label(window,text="Module saved successfully!",font=BUTTON_FONT,fg="green")
+            status.grid(row=start_row+9,column=0, padx=PAD_X, pady=PAD_Y)
+            save_mod_button.config(state="disabled")
 
-    status = tk.Label(window,text="Module saved successfully!",font=("Arial",12,"bold"),fg="green")
-    status.grid(row=start_row+9,column=0)
-
-    save_mod_button.config(state="disabled")
 
 def handle_home(window):
     show_home_screen(window)
@@ -284,21 +362,24 @@ def handle_home(window):
 def show_saved_modules(window):
     clear_window(window)
 
-    title = tk.Label(window,text="Saved Modules",font=("Arial",16,"bold"))
-    title.grid(row=0,column=0)
+    title = tk.Label(window,text="Saved Modules",font=TITLE_FONT)
+    title.grid(row=0,column=0, padx=PAD_X, pady=PAD_Y)
 
     modules = get_saved_modules()
     module_list = tk.Listbox(window)
-    module_list.grid(row=1,column=0)
+    module_list.grid(row=1,column=0, padx=PAD_X, pady=PAD_Y)
     for module in modules:
         module_list.insert(tk.END,module)
 
-    open_button = tk.Button(window,text="Open",font=("Arial",12,"bold"),command=lambda: handle_open(window,module_list))
-    open_button.grid(row=2,column=0)
-    delete_button = tk.Button(window,text="Delete",font=("Arial",12,"bold"),command=lambda: handle_delete(window,module_list))
-    delete_button.grid(row=3,column=0)
-    home_button = tk.Button(window,text="Home",font=("Arial",12,"bold"),command=lambda: show_home_screen(window))
-    home_button.grid(row=4,column=0)
+    open_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Open",font=BUTTON_FONT,command=lambda: handle_open(window,module_list))
+    open_button.grid(row=2,column=0, padx=PAD_X, pady=PAD_Y)
+    delete_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Delete",font=BUTTON_FONT,command=lambda: handle_delete(window,module_list))
+    delete_button.grid(row=3,column=0, padx=PAD_X, pady=PAD_Y)
+    home_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Home",font=BUTTON_FONT,command=lambda: show_home_screen(window))
+    home_button.grid(row=4,column=0, padx=PAD_X, pady=PAD_Y)
 
 def handle_open(window,module_list):
     selected = module_list.curselection()
@@ -322,14 +403,15 @@ def handle_delete(window,module_list):
 def show_saved_module(window,module_name,contents):
     clear_window(window)
 
-    title = tk.Label(window,text=f"{module_name}",font=("Arial",16,"bold"))
-    title.grid(row=0,column=0)
+    title = tk.Label(window,text=f"{module_name}",font=TITLE_FONT)
+    title.grid(row=0,column=0, padx=PAD_X, pady=PAD_Y)
 
-    info = tk.Label(window,text=f"{contents}",font=("Arial",12,"bold"))
-    info.grid(row=1,column=0)
+    info = tk.Label(window,text=f"{contents}",font=BUTTON_FONT)
+    info.grid(row=1,column=0, padx=PAD_X, pady=PAD_Y)
 
-    home_button = tk.Button(window,text="Home",font=("Arial",12,"bold"),command=lambda: show_home_screen(window))
-    home_button.grid(row=2,column=0)
+    home_button = tk.Button(window,
+        width=BUTTON_WIDTH,text="Home",font=BUTTON_FONT,command=lambda: show_home_screen(window))
+    home_button.grid(row=2,column=0, padx=PAD_X, pady=PAD_Y)
 
 def main():
     window = create_window()
